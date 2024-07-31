@@ -12,16 +12,23 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set env
-      run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
-      
+    # get version from tag (e.g., v1.2.3 --> 1.2.3
+    - name: Get version
+      id: get_version
+      uses: JanneMattila/get-version-from-tag@v3
+
+    - name: Display version
+      run: |
+        VERSION=$(echo "${{ steps.get_version.outputs.version }}")
+        echo $VERSION
+              
     # edit Libraries.IO.SDK.csproj to replace with desired version
-    - name: replace version
+    - name: Replace version
       uses: jacobtomlinson/gha-find-replace@3.0.3
       with:
         include: "*/Libraries.IO.SDK/Libraries.IO.SDK.csproj"
         find: <Version>1.0.0</Version>
-        replace: <Version>$RELEASE_VERSION</Version>
+        replace: <Version>${{ steps.get_version.outputs.version }}</Version>
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
