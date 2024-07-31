@@ -1,9 +1,8 @@
-﻿using Libraries.IO.SDK;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ConsoleApp;
+namespace Libraries.IO.SDK.Sample;
 
 public class Program
 {
