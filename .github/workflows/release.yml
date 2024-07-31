@@ -42,5 +42,5 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release --no-build --verbosity normal
     - name: Pack
-      run: dotnet pack ~/Libraries.IO.SDK/src/Libraries.IO.SDK/Libraries.IO.SDK.csproj
+      run: dotnet pack /home/runner/work/Libraries.IO.SDK/Libraries.IO.SDK/src/Libraries.IO.SDK/Libraries.IO.SDK.csproj
       
