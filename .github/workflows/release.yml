@@ -1,0 +1,39 @@
+name: release
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    # edit Libraries.IO.SDK.csproj 
+    - name: Replace package version
+      run: sed -i 's/<Version>1.0.0</Version>/<Version>$GITHUB_REF_NAME</Version>/g' .\src\Libraries.IO.SDK\Libraries.IO.SDK.csproj
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Pack
+      run: dotnet pack .\src\Libraries.IO.SDK
+
+    # temp - store artifact / placeholder for uploading to Nuget
+    - name: Archive package
+      uses: actions/upload-artifact@v4
+      with:
+        name: Libraries.IO.SDK.nupkg
+        path: .\src\Libraries.IO.SDK\bin\Release\Libraries.IO.SDK.*.nupkg
