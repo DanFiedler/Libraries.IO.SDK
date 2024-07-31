@@ -4,16 +4,17 @@
 
 A C#/.NET API wrapper for the [Libraries.IO API](https://libraries.io/api).
 
-**Libraries.IO.SDK** currently supports all of the current Libraries.IO API endpoints EXCEPT the `subscriptions` endpoints.
+**Libraries.IO.SDK** currently supports all of the Libraries.IO API endpoints EXCEPT `subscriptions`.
 
 ## Usage 
 
-Add the [Libraries.IO.SDK Nuget package](https://www.nuget.org/packages/Libraries.IO.SDK/) to your project
+Add the [Libraries.IO.SDK Nuget package](https://www.nuget.org/packages/Fiedler.Libraries.IO.SDK) to your project
 and use `ILibrariesIOClient` to call the desired endpoints. This package assumes usage of [.NET dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
 and requires registration of [IHttpClientFactory](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory).
 
-The `ILibrariesIOClient` class provides methods for each endpoint of the Libraries.IO API.
 Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and deserializes the JSON response into strongly typed objects.
+(e.g., `GetProject` calls the `https://libraries.io/api/:platform/:name` endpoint.) Each method's documentation comments include the 
+method's associated endpoint.
 
 Basic usage is demonstrated in the `samples\Libraries.IO.SDK.Sample` project and in the code block below:
 
