@@ -42,11 +42,4 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Pack
-      run: dotnet pack .\src\Libraries.IO.SDK
-
-    # temp - store artifact / placeholder for uploading to Nuget
-    - name: Archive package
-      uses: actions/upload-artifact@v4
-      with:
-        name: Libraries.IO.SDK.nupkg
-        path: .\src\Libraries.IO.SDK\bin\Release\Libraries.IO.SDK.*.nupkg
+      run: dotnet pack ./Libraries.IO.SDK/src/Libraries.IO.SDK/
