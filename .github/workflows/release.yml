@@ -2,21 +2,26 @@ name: release
 
 on:
   push:
-    branches: [ "main" ]
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    # edit Libraries.IO.SDK.csproj 
-    - name: Replace package version
-      run: sed -i 's/<Version>1.0.0</Version>/<Version>$GITHUB_REF_NAME</Version>/g' .\src\Libraries.IO.SDK\Libraries.IO.SDK.csproj
+    - name: Set env
+      run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+      
+    # edit Libraries.IO.SDK.csproj to replace with desired version
+    - name: replace version
+      uses: jacobtomlinson/gha-find-replace@3.0.3
+      with:
+        include: "*/Libraries.IO.SDK/Libraries.IO.SDK.csproj"
+        find: <Version>1.0.0</Version>
+        replace: <Version>$RELEASE_VERSION</Version>
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
