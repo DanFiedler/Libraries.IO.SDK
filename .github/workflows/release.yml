@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # get version from tag (e.g., v1.2.3 --> 1.2.3
+    # get version from tag (e.g., v1.2.3 --> 1.2.3)
     - name: Get version
       id: get_version
       uses: JanneMattila/get-version-from-tag@v3
@@ -30,7 +30,8 @@ jobs:
         include: "*/Libraries.IO.SDK/Libraries.IO.SDK.csproj"
         find: <Version>1.0.0</Version>
         replace: <Version>${{ steps.get_version.outputs.version }}</Version>
-    
+
+    # build our library, run tests, and create the NuGet package
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -43,4 +44,10 @@ jobs:
       run: dotnet test --configuration Release --no-build --verbosity normal
     - name: Pack
       run: dotnet pack /home/runner/work/Libraries.IO.SDK/Libraries.IO.SDK/src/Libraries.IO.SDK/Libraries.IO.SDK.csproj
+
+    # Publish package to NuGet
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+    - name: Publish to Nuget
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
       
