@@ -1,0 +1,131 @@
+[
+    {
+        "code_of_conduct_url": null,
+        "contributions_count": 972,
+        "contribution_guidelines_url": null,
+        "dependent_repos_count": 758,
+        "dependents_count": 1068,
+        "deprecation_reason": "react-tools is deprecated. For more information, visit https://fb.me/react-tools-deprecated",
+        "description": "A set of complementary tools to React, including the JSX transformer.",
+        "forks": 46020,
+        "funding_urls": null,
+        "homepage": "https://facebook.github.io/react",
+        "keywords": [
+            "react",
+            "jsx",
+            "transformer",
+            "view",
+            "declarative",
+            "frontend",
+            "javascript",
+            "library",
+            "ui"
+        ],
+        "language": "JavaScript",
+        "latest_download_url": "https://registry.npmjs.org/react-tools/-/react-tools-0.14.0-alpha3.tgz",
+        "latest_release_number": "0.14.0-alpha3",
+        "latest_release_published_at": "2015-05-27 23:50:53 UTC",
+        "latest_stable_release_number": "0.13.3",
+        "latest_stable_release_published_at": "2015-05-08 23:40:38 UTC",
+        "license_normalized": false,
+        "licenses": "BSD-3-Clause",
+        "name": "react-tools",
+        "normalized_licenses": [
+            "BSD-3-Clause"
+        ],
+        "package_manager_url": "https://www.npmjs.com/package/react-tools",
+        "platform": "NPM",
+        "rank": 19,
+        "repository_license": "MIT",
+        "repository_status": null,
+        "repository_url": "https://github.com/facebook/react",
+        "security_policy_url": null,
+        "stars": 225612,
+        "status": "Deprecated",
+        "versions": [
+            {
+                "number": "0.10.0",
+                "published_at": "2014-03-21 21:48:20 UTC",
+                "spdx_expression": "Apache-2.0",
+                "original_license": "Apache-2.0",
+                "researched_at": null,
+                "repository_sources": [
+                    "NPM"
+                ]
+            },
+            {
+                "number": "0.10.0-rc1",
+                "published_at": "2014-03-19 18:29:39 UTC",
+                "spdx_expression": "Apache-2.0",
+                "original_license": "Apache-2.0",
+                "researched_at": null,
+                "repository_sources": [
+                    "NPM"
+                ]
+            }
+        ]
+    },
+    {
+        "code_of_conduct_url": null,
+        "contributions_count": 29,
+        "contribution_guidelines_url": null,
+        "dependent_repos_count": 112,
+        "dependents_count": 160,
+        "deprecation_reason": null,
+        "description": "A simple AST visitor-based JS transformer",
+        "forks": 66,
+        "funding_urls": [
+
+        ],
+        "homepage": "https://github.com/facebook/jstransform#readme",
+        "keywords": [
+            "transformer",
+            "compiler",
+            "syntax",
+            "visitor"
+        ],
+        "language": "JavaScript",
+        "latest_download_url": "https://registry.npmjs.org/jstransform/-/jstransform-11.0.3.tgz",
+        "latest_release_number": "11.0.3",
+        "latest_release_published_at": "2015-07-13 18:32:22 UTC",
+        "latest_stable_release_number": "11.0.3",
+        "latest_stable_release_published_at": "2015-07-13 18:32:22 UTC",
+        "license_normalized": false,
+        "licenses": "BSD-3-Clause",
+        "name": "jstransform",
+        "normalized_licenses": [
+            "BSD-3-Clause"
+        ],
+        "package_manager_url": "https://www.npmjs.com/package/jstransform",
+        "platform": "NPM",
+        "rank": 18,
+        "repository_license": "Other",
+        "repository_status": "Unmaintained",
+        "repository_url": "https://github.com/facebook/jstransform",
+        "security_policy_url": null,
+        "stars": 484,
+        "status": null,
+        "versions": [
+            {
+                "number": "1.0.0",
+                "published_at": "2013-10-16 01:49:30 UTC",
+                "spdx_expression": "Apache-2.0",
+                "original_license": "Apache-2.0",
+                "researched_at": null,
+                "repository_sources": [
+                    "NPM"
+                ]
+            },
+            {
+                "number": "10.0.0",
+                "published_at": "2015-03-01 19:20:39 UTC",
+                "spdx_expression": "Apache-2.0",
+                "original_license": "Apache-2.0",
+                "researched_at": null,
+                "repository_sources": [
+                    "NPM"
+                ]
+            }
+        ]
+    }
+]

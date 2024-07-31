@@ -1,0 +1,99 @@
+{
+    "code_of_conduct_url": null,
+    "contributions_count": 220,
+    "contribution_guidelines_url": null,
+    "dependent_repos_count": 56,
+    "dependents_count": 172,
+    "deprecation_reason": null,
+    "description": "Powerful .NET library for benchmarking",
+    "forks": 938,
+    "funding_urls": [],
+    "homepage": "https://github.com/dotnet/BenchmarkDotNet",
+    "keywords": [
+        "benchmark",
+        "benchmarking",
+        "performance",
+        "c-sharp",
+        "csharp",
+        "dotnet",
+        "hacktoberfest"
+    ],
+    "language": "C#",
+    "latest_download_url": "https://www.nuget.org/api/v2/package/BenchmarkDotNet/0.13.12",
+    "latest_release_number": "0.13.12",
+    "latest_release_published_at": "2024-01-05T18:39:12.470Z",
+    "latest_stable_release_number": "0.13.12",
+    "latest_stable_release_published_at": "2024-01-05T18:39:12.470Z",
+    "license_normalized": false,
+    "licenses": "MIT",
+    "name": "BenchmarkDotNet",
+    "normalized_licenses": [
+        "MIT"
+    ],
+    "package_manager_url": "https://www.nuget.org/packages/BenchmarkDotNet/",
+    "platform": "NuGet",
+    "rank": 18,
+    "repository_license": "MIT",
+    "repository_status": null,
+    "repository_url": "https://github.com/dotnet/BenchmarkDotNet",
+    "security_policy_url": null,
+    "stars": 9736,
+    "status": null,
+    "versions": [
+        {
+            "number": "0.10.0",
+            "published_at": "2016-11-10T14:35:17.617Z",
+            "spdx_expression": "NOASSERTION",
+            "original_license": "https://github.com/dotnet/BenchmarkDotNet/blob/master/LICENSE.md",
+            "researched_at": null,
+            "repository_sources": [
+                "NuGet"
+            ]
+        },
+        {
+            "number": "0.9.9",
+            "published_at": "2016-08-17T23:26:47.223Z",
+            "spdx_expression": "NOASSERTION",
+            "original_license": "https://github.com/PerfDotNet/BenchmarkDotNet/blob/master/LICENSE.md",
+            "researched_at": null,
+            "repository_sources": [
+                "NuGet"
+            ]
+        }
+    ],
+    "dependencies_for_version": "0.9.9",
+    "dependencies": [
+        {
+            "project_name": "BenchmarkDotNet.Toolchains.Roslyn",
+            "name": "BenchmarkDotNet.Toolchains.Roslyn",
+            "platform": "NuGet",
+            "requirements": ">= 0.9.9",
+            "latest_stable": "0.10.14",
+            "latest": "0.10.14",
+            "deprecated": true,
+            "outdated": false,
+            "filepath": null,
+            "kind": "runtime",
+            "optional": false,
+            "normalized_licenses": [
+                "MIT"
+            ]
+        },
+        {
+            "project_name": "BenchmarkDotNet.Core",
+            "name": "BenchmarkDotNet.Core",
+            "platform": "NuGet",
+            "requirements": ">= 0.9.9",
+            "latest_stable": "0.10.14",
+            "latest": "0.10.14",
+            "deprecated": true,
+            "outdated": false,
+            "filepath": null,
+            "kind": "runtime",
+            "optional": false,
+            "normalized_licenses": [
+                "MIT"
+            ]
+        }
+    ]
+}

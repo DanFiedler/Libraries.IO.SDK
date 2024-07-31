@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\contributor_array.json" />
+    <None Remove="Resources\platform.json" />
+    <None Remove="Resources\project.json" />
+    <None Remove="Resources\project_array.json" />
+    <None Remove="Resources\project_dependencies.json" />
+    <None Remove="Resources\repository.json" />
+    <None Remove="Resources\repository_array.json" />
+    <None Remove="Resources\repository_dependencies.json" />
+    <None Remove="Resources\source_rank.json" />
+    <None Remove="Resources\user.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\contributor_array.json" />
+    <EmbeddedResource Include="Resources\platform.json" />
+    <EmbeddedResource Include="Resources\project.json" />
+    <EmbeddedResource Include="Resources\project_array.json" />
+    <EmbeddedResource Include="Resources\project_dependencies.json" />
+    <EmbeddedResource Include="Resources\repository.json" />
+    <EmbeddedResource Include="Resources\repository_array.json" />
+    <EmbeddedResource Include="Resources\repository_dependencies.json" />
+    <EmbeddedResource Include="Resources\source_rank.json" />
+    <EmbeddedResource Include="Resources\user.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="NSubstitute" Version="5.1.0" />
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+    <PackageReference Include="xunit" Version="2.9.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Libraries.IO.SDK\Libraries.IO.SDK.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

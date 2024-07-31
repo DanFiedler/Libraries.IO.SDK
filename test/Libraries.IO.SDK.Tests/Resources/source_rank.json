@@ -1,0 +1,21 @@
+{
+    "basic_info_present": 1,
+    "repository_present": 1,
+    "readme_present": 1,
+    "license_present": 1,
+    "versions_present": 1,
+    "follows_semver": 1,
+    "recent_release": 1,
+    "not_brand_new": 1,
+    "one_point_oh": 1,
+    "dependent_projects": 4,
+    "dependent_repositories": 2,
+    "stars": 2,
+    "contributors": 1,
+    "subscribers": 1,
+    "all_prereleases": 0,
+    "any_outdated_dependencies": 0,
+    "is_deprecated": 0,
+    "is_unmaintained": 0,
+    "is_removed": 0
+}

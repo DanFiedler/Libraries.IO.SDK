@@ -1,0 +1,36 @@
+[
+    {
+        "github_id": "887639",
+        "login": "donavon",
+        "user_type": "User",
+        "created_at": "2015-01-27 07:05:04 UTC",
+        "updated_at": "2020-08-19 17:33:49 UTC",
+        "name": "Donavon West",
+        "company": "@sessionsfm, former @americanexpress @yuzu-nyc",
+        "blog": "https://donavon.com",
+        "location": "NYC",
+        "hidden": false,
+        "last_synced_at": "2016-12-19 02:04:40 UTC",
+        "email": null,
+        "bio": "Lots of JavaScript, mostly React Hooks now-a-days. Co-organizer of @usereactnyc",
+        "uuid": "887639",
+        "host_type": "GitHub"
+    },
+    {
+        "github_id": "1060",
+        "login": "andrew",
+        "user_type": "User",
+        "created_at": "2015-01-27 07:05:17 UTC",
+        "updated_at": "2024-06-15 13:28:52 UTC",
+        "name": "Andrew Nesbitt",
+        "company": "@ecosyste-ms and @octobox ",
+        "blog": "https://nesbitt.io",
+        "location": "Bristol, UK",
+        "hidden": false,
+        "last_synced_at": "2017-04-18 11:02:01 UTC",
+        "email": "andrewnez@gmail.com",
+        "bio": "Working on mapping the world of open source software @ecosyste-ms  and empowering developers with @octobox ",
+        "uuid": "1060",
+        "host_type": "GitHub"
+    }
+]
