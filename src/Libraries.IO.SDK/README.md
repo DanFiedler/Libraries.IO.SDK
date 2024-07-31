@@ -1,21 +1,16 @@
 # Libraries.IO.SDK
 
-## Introduction
-
-A C#/.NET API wrapper for the [Libraries.IO API](https://libraries.io/api).
+This package is a client library API wrapper for the [Libraries.IO API](https://libraries.io/api).
 
 **Libraries.IO.SDK** currently supports all of the current Libraries.IO API endpoints EXCEPT the `subscriptions` endpoints.
 
-## Usage 
+## Usage
 
-Add the [Libraries.IO.SDK Nuget package](https://www.nuget.org/packages/Libraries.IO.SDK/) to your project
-and use `ILibrariesIOClient` to call the desired endpoints. This package assumes usage of [.NET dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
+Use `ILibrariesIOClient` to call the desired endpoints. This package assumes usage of [.NET dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
 and requires registration of [IHttpClientFactory](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory).
 
 The `ILibrariesIOClient` class provides methods for each endpoint of the Libraries.IO API.
 Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and deserializes the JSON response into strongly typed objects.
-
-Basic usage is demonstrated in the `samples\Libraries.IO.SDK.Sample` project and in the code block below:
 
 ```csharp
     // Sample DI setup of ILibrariesIOClient
@@ -39,25 +34,9 @@ Basic usage is demonstrated in the `samples\Libraries.IO.SDK.Sample` project and
     }
 ```
 
-If desired, behavior of the `HttpClient` used by `ILibrariesIOClient` can be customized 
+If desired, behavior of the `HttpClient` used by `ILibrariesIOClient` can be customized
 using a [named client](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory#named-clients) and setting `ClientConfiguration.HttpClientName`.
 
-## Build and Test
+# Documentation
 
-**Libraries.IO.SDK** targets [.NET 8.0](https://dotnet.microsoft.com/en-us/download) and can be built and tested using standard commands.
-
-- Build: `dotnet build`
-- Run Tests: `dotnet test`
-
-## Contribute
-
-Please feel free to send pull requests and raise issues 
-(but first do a search of open issues to see if someone has already filed a similar request).
-
-## Security
-
-See [SECURITY](SECURITY.md).
-
-## License
-
-**Libraries.IO.SDK** is licensed under the [MIT](LICENSE.TXT) license.
+For more information, please refer to the package's [GitHub repository](https://github.com/DanFiedler/Libraries.IO.SDK).
