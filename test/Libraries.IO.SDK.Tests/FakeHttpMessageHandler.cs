@@ -7,6 +7,8 @@ public class FakeHttpMessageHandler : HttpMessageHandler
     private readonly HttpStatusCode _statusCode;
     private readonly HttpContent _httpContent;
 
+    public Uri? LastRequestUri { get; private set; }
+
     public FakeHttpMessageHandler(string responseBody)
     {
         _statusCode = HttpStatusCode.OK;
@@ -27,6 +29,8 @@ public class FakeHttpMessageHandler : HttpMessageHandler
 
     protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
     {
+        LastRequestUri = request.RequestUri;
+
         return new HttpResponseMessage
         {
             StatusCode = _statusCode,

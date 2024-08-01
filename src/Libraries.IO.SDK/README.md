@@ -15,8 +15,6 @@ Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and de
 ```csharp
     // Sample DI setup of ILibrariesIOClient
     var builder = Host.CreateApplicationBuilder(args);
-    ConfigureServices(builder);
-    var host = builder.Build();
     var config = new ClientConfiguration
     {
         ApiKey = Environment.GetEnvironmentVariable("LIBRARIES_IO_API_KEY") ?? string.Empty,
@@ -24,9 +22,10 @@ Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and de
     builder.Services.AddSingleton(config);
     builder.Services.AddHttpClient();
     builder.Services.AddSingleton<ILibrariesIOClient, LibrariesIOClient>();
-    var client = host.Services.GetRequiredService<ILibrariesIOClient>();
-
+    var host = builder.Build();
+    
     // Sample usage of ILibrariesIOClient to get list of platforms from LibrariesIO
+    var client = host.Services.GetRequiredService<ILibrariesIOClient>();
     var cts = new CancellationTokenSource();
     await foreach(var platform in client.GetPlatforms(cts.Token))
     {

@@ -27,7 +27,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
 
     public Task<Project?> GetProject(string platform, string project, CancellationToken cancellationToken)
     {
-        string url = $"https://libraries.io/api/platforms?api_key={_config.ApiKey}";
+        string url = $"https://libraries.io/api/{platform}/{project}?api_key={_config.ApiKey}";
         var httpClient = CreateHttpClient();
         return httpClient.GetFromJsonAsync<Project>(url, cancellationToken);
     }

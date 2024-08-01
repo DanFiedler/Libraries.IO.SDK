@@ -33,6 +33,22 @@ public class LibrariesIOClientTests
     }
 
     [Fact]
+    public async Task When_GetProject_called_then_request_uri_matches_expected()
+    {
+        string json = GetJson("project.json");
+        var messageHandler = new FakeHttpMessageHandler(json);
+        var httpClientFactory = SetupHttpClientFactory(messageHandler);
+        var client = CreateClient(httpClientFactory);
+
+        var project = await client.GetProject("npm", "arbitrary", CancellationToken.None);
+
+        Assert.NotNull(project);
+        Assert.NotNull(messageHandler.LastRequestUri);
+        string url = messageHandler.LastRequestUri.AbsoluteUri;
+        url.Should().Be("https://libraries.io/api/npm/arbitrary?api_key=MyApiKey");
+    }
+
+    [Fact]
     public async Task When_GetProjectDependencies_called_then_dependency_count_is_two()
     {
         string json = GetJson("project_dependencies.json");
@@ -241,12 +257,23 @@ public class LibrariesIOClientTests
 
     private static LibrariesIOClient CreateClient(IHttpClientFactory httpClientFactory)
     {
-        return new LibrariesIOClient(httpClientFactory, new ClientConfiguration());
+        return new LibrariesIOClient(httpClientFactory, new ClientConfiguration
+        {
+            ApiKey = "MyApiKey"
+        });
     }
 
     private static IHttpClientFactory SetupHttpClientFactory(string json)
     {
         var httpMessageHandler = new FakeHttpMessageHandler(json);
+        var httpClient = new HttpClient(httpMessageHandler);
+        var httpClientFactory = Substitute.For<IHttpClientFactory>();
+        httpClientFactory.CreateClient(Arg.Any<string>()).Returns(httpClient);
+        return httpClientFactory;
+    }
+
+    private static IHttpClientFactory SetupHttpClientFactory(FakeHttpMessageHandler httpMessageHandler)
+    {
         var httpClient = new HttpClient(httpMessageHandler);
         var httpClientFactory = Substitute.For<IHttpClientFactory>();
         httpClientFactory.CreateClient(Arg.Any<string>()).Returns(httpClient);
