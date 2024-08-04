@@ -184,6 +184,7 @@ public interface ILibrariesIOClient
     /// </summary>
     /// <param name="login"></param>
     /// <param name="cancellationToken"></param>
+    /// <param name="platform"></param>
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
