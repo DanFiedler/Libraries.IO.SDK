@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Microsoft.Extensions.Configuration;
 using NSubstitute;
 
 namespace Libraries.IO.SDK.Tests;
@@ -257,10 +258,9 @@ public class LibrariesIOClientTests
 
     private static LibrariesIOClient CreateClient(IHttpClientFactory httpClientFactory)
     {
-        return new LibrariesIOClient(httpClientFactory, new ClientConfiguration
-        {
-            ApiKey = "MyApiKey"
-        });
+        var config = Substitute.For<IConfiguration>();
+        config[LibrariesIOClient.ConfigurationKeys.ApiKey].Returns("MyApiKey");
+        return new LibrariesIOClient(httpClientFactory, config);
     }
 
     private static IHttpClientFactory SetupHttpClientFactory(string json)

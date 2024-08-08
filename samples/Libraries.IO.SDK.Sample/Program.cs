@@ -35,11 +35,6 @@ public class Program
         {
             loggingBuilder.AddConsole();
         });
-        var config = new ClientConfiguration
-        {
-            ApiKey = Environment.GetEnvironmentVariable("LIBRARIES_IO_API_KEY") ?? string.Empty,
-        };
-        builder.Services.AddSingleton(config);
         builder.Services.AddHttpClient();
         builder.Services.AddSingleton<ILibrariesIOClient, LibrariesIOClient>();
     }

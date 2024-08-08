@@ -6,8 +6,11 @@ This package is a client library API wrapper for the [Libraries.IO API](https://
 
 ## Usage
 
-Use `ILibrariesIOClient` to call the desired endpoints. This package assumes usage of [.NET dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
+Use `ILibrariesIOClient` to call the desired endpoints. This package assumes the following:
+
+- Usage of [.NET dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
 and requires registration of [IHttpClientFactory](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory).
+- [IConfiguration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration) with an entry for `LIBRARIES_IO_API_KEY` provides the value of the user's Libraries IO API key. This is typically set as an environment variable but any configuration provider will do.
 
 The `ILibrariesIOClient` class provides methods for each endpoint of the Libraries.IO API.
 Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and deserializes the JSON response into strongly typed objects.
@@ -15,11 +18,6 @@ Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and de
 ```csharp
     // Sample DI setup of ILibrariesIOClient
     var builder = Host.CreateApplicationBuilder(args);
-    var config = new ClientConfiguration
-    {
-        ApiKey = Environment.GetEnvironmentVariable("LIBRARIES_IO_API_KEY") ?? string.Empty,
-    };
-    builder.Services.AddSingleton(config);
     builder.Services.AddHttpClient();
     builder.Services.AddSingleton<ILibrariesIOClient, LibrariesIOClient>();
     var host = builder.Build();
@@ -32,9 +30,6 @@ Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and de
         Console.WriteLine($"Platform: {platform.Name}");
     }
 ```
-
-If desired, behavior of the `HttpClient` used by `ILibrariesIOClient` can be customized
-using a [named client](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory#named-clients) and setting `ClientConfiguration.HttpClientName`.
 
 # Documentation
 

@@ -1,20 +1,32 @@
 ﻿using Libraries.IO.SDK.Models;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text.Encodings.Web;
 
 namespace Libraries.IO.SDK;
 
-public class LibrariesIOClient(IHttpClientFactory httpClientFactory, 
-    ClientConfiguration config) : ILibrariesIOClient
+public class LibrariesIOClient : ILibrariesIOClient
 {
-    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
-    private readonly ClientConfiguration _config = config;
+    public static class ConfigurationKeys
+    {
+        public const string ApiKey = "LIBRARIES_IO_API_KEY";
+    }
+
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly string _apiKey;
+
+    public LibrariesIOClient(IHttpClientFactory httpClientFactory, IConfiguration config)
+    {
+        _httpClientFactory = httpClientFactory;
+        string? apiKey = config[ConfigurationKeys.ApiKey] ?? throw new InvalidOperationException($"LibrariesIOClient requires configuration '{ConfigurationKeys.ApiKey}' to be set.");
+        _apiKey = apiKey;
+    }
 
     public async IAsyncEnumerable<Platform> GetPlatforms([EnumeratorCancellation] CancellationToken cancellationToken, int page = 1, int perPage = 30)
     {
         string url = $"https://libraries.io/api/platforms?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var platforms = httpClient.GetFromJsonAsAsyncEnumerable<Platform>(url, cancellationToken);
         await foreach(var platform in platforms)
         {
@@ -27,8 +39,8 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
 
     public Task<Project?> GetProject(string platform, string project, CancellationToken cancellationToken)
     {
-        string url = $"https://libraries.io/api/{platform}/{project}?api_key={_config.ApiKey}";
-        var httpClient = CreateHttpClient();
+        string url = $"https://libraries.io/api/{platform}/{project}?api_key={_apiKey}";
+        var httpClient = _httpClientFactory.CreateClient();
         return httpClient.GetFromJsonAsync<Project>(url, cancellationToken);
     }
 
@@ -37,8 +49,8 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
         platform = UrlEncoder.Default.Encode(platform);
         name = UrlEncoder.Default.Encode(name);
         version = UrlEncoder.Default.Encode(version);
-        string url = $"https://libraries.io/api/{platform}/{name}/{version}/dependencies?api_key={_config.ApiKey}";
-        var httpClient = CreateHttpClient();
+        string url = $"https://libraries.io/api/{platform}/{name}/{version}/dependencies?api_key={_apiKey}";
+        var httpClient = _httpClientFactory.CreateClient();
         return httpClient.GetFromJsonAsync<Project?>(url, cancellationToken);
     }
 
@@ -47,7 +59,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
         platform = UrlEncoder.Default.Encode(platform);
         name = UrlEncoder.Default.Encode(name);
         string url = $"https://libraries.io/api/{platform}/{name}/dependents?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var projects = httpClient.GetFromJsonAsAsyncEnumerable<Project?>(url, cancellationToken);
         await foreach(var project in projects)
         {
@@ -63,7 +75,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
         platform = UrlEncoder.Default.Encode(platform);
         name = UrlEncoder.Default.Encode(name);
         string url = $"https://libraries.io/api/{platform}/{name}/dependent_repositories?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var repositories = httpClient.GetFromJsonAsAsyncEnumerable<Repository?>(url, cancellationToken);
         await foreach (var repository in repositories)
         {
@@ -78,7 +90,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
         platform = UrlEncoder.Default.Encode(platform);
         name = UrlEncoder.Default.Encode(name);
         string url = $"https://libraries.io/api/{platform}/{name}/contributors?{GetCommonParameters(page,perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var contributors = httpClient.GetFromJsonAsAsyncEnumerable<Contributor?>(url, cancellationToken);
         await foreach (var contributor in contributors)
         {
@@ -93,15 +105,15 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     {
         platform = UrlEncoder.Default.Encode(platform);
         name = UrlEncoder.Default.Encode(name);
-        string url = $"https://libraries.io/api/{platform}/{name}/sourcerank?api_key={_config.ApiKey}";
-        var httpClient = CreateHttpClient();
+        string url = $"https://libraries.io/api/{platform}/{name}/sourcerank?api_key={_apiKey}";
+        var httpClient = _httpClientFactory.CreateClient();
         return httpClient.GetFromJsonAsync<SourceRank?>(url, cancellationToken);
     }
 
     public async IAsyncEnumerable<Project> SearchProjects(string? query, [EnumeratorCancellation] CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30)
     {
         string url = $"{ProjectSearchUrlBuilder.Build(query, searchParameters)}&{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var projects = httpClient.GetFromJsonAsAsyncEnumerable<Project?>(url, cancellationToken);
         await foreach (var project in projects)
         {
@@ -116,8 +128,8 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     {
         owner = UrlEncoder.Default.Encode(owner);
         name = UrlEncoder.Default.Encode(name);
-        string url = $"https://libraries.io/api/github/{owner}/{name}?api_key={_config.ApiKey}";
-        var httpClient = CreateHttpClient();
+        string url = $"https://libraries.io/api/github/{owner}/{name}?api_key={_apiKey}";
+        var httpClient = _httpClientFactory.CreateClient();
         return httpClient.GetFromJsonAsync<Repository?>(url, cancellationToken);
     }
 
@@ -125,8 +137,8 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     {
         owner = UrlEncoder.Default.Encode(owner);
         name = UrlEncoder.Default.Encode(name);
-        string url = $"https://libraries.io/api/github/{owner}/{name}/dependencies?api_key={_config.ApiKey}";
-        var httpClient = CreateHttpClient();
+        string url = $"https://libraries.io/api/github/{owner}/{name}/dependencies?api_key={_apiKey}";
+        var httpClient = _httpClientFactory.CreateClient();
         return httpClient.GetFromJsonAsync<Repository?>(url, cancellationToken);
     }
 
@@ -136,7 +148,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
         owner = UrlEncoder.Default.Encode(owner);
         name = UrlEncoder.Default.Encode(name);
         string url = $"https://libraries.io/api/github/{owner}/{name}/projects?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var projects = httpClient.GetFromJsonAsAsyncEnumerable<Project?>(url, cancellationToken);
         await foreach (var project in projects)
         {
@@ -150,8 +162,8 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     public Task<User?> GetUser(string login, CancellationToken cancellationToken)
     {
         login = UrlEncoder.Default.Encode(login);
-        string url = $"https://libraries.io/api/github/{login}?api_key={_config.ApiKey}";
-        var httpClient = CreateHttpClient();
+        string url = $"https://libraries.io/api/github/{login}?api_key={_apiKey}";
+        var httpClient = _httpClientFactory.CreateClient();
         return httpClient.GetFromJsonAsync<User?>(url, cancellationToken);
     }
 
@@ -159,7 +171,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     {
         login = UrlEncoder.Default.Encode(login);
         string url = $"https://libraries.io/api/github/{login}/repositories?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var repositories = httpClient.GetFromJsonAsAsyncEnumerable<Repository?>(url, cancellationToken);
         await foreach (var repository in repositories)
         {
@@ -174,7 +186,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     {
         login = UrlEncoder.Default.Encode(login);
         string url = $"https://libraries.io/api/github/{login}/projects?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var projects = httpClient.GetFromJsonAsAsyncEnumerable<Project?>(url, cancellationToken);
         await foreach (var project in projects)
         {
@@ -189,7 +201,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     {
         login = UrlEncoder.Default.Encode(login);
         string url = $"https://libraries.io/api/github/{login}/project-contributions?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var projects = httpClient.GetFromJsonAsAsyncEnumerable<Project?>(url, cancellationToken);
         await foreach (var project in projects)
         {
@@ -204,7 +216,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
     {
         login = UrlEncoder.Default.Encode(login);
         string url = $"https://libraries.io/api/github/{login}/repository-contributions?{GetCommonParameters(page, perPage)}";
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var repositories = httpClient.GetFromJsonAsAsyncEnumerable<Repository?>(url, cancellationToken);
         await foreach (var repository in repositories)
         {
@@ -223,7 +235,7 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
             platform = UrlEncoder.Default.Encode(platform);
             url += $"&platform={platform}";
         }
-        var httpClient = CreateHttpClient();
+        var httpClient = _httpClientFactory.CreateClient();
         var projects = httpClient.GetFromJsonAsAsyncEnumerable<Project?>(url, cancellationToken);
         await foreach (var project in projects)
         {
@@ -236,11 +248,6 @@ public class LibrariesIOClient(IHttpClientFactory httpClientFactory,
 
     private string GetCommonParameters(int page, int perPage)
     {
-        return $"api_key={_config.ApiKey}&page={page}&per_page={perPage}";
-    }
-
-    private HttpClient CreateHttpClient()
-    {               
-        return string.IsNullOrEmpty(_config.HttpClientName) ? _httpClientFactory.CreateClient() : _httpClientFactory.CreateClient(_config.HttpClientName);
+        return $"api_key={_apiKey}&page={page}&per_page={perPage}";
     }
 }

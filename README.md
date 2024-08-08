@@ -9,8 +9,14 @@ A C#/.NET API wrapper for the [Libraries.IO API](https://libraries.io/api).
 ## Usage 
 
 Add the [Libraries.IO.SDK Nuget package](https://www.nuget.org/packages/Fiedler.Libraries.IO.SDK) to your project
-and use `ILibrariesIOClient` to call the desired endpoints. This package assumes usage of [.NET dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
+and use `ILibrariesIOClient` to call the desired endpoints. 
+
+This package assumes the following:
+
+- Usage of [.NET dependency injection](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection)
 and requires registration of [IHttpClientFactory](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory).
+- [IConfiguration](https://learn.microsoft.com/en-us/dotnet/core/extensions/configuration) with an entry for `LIBRARIES_IO_API_KEY` provides the value of the user's Libraries IO API key. This is typically set as an environment variable but any configuration provider will do.
+
 
 Each `ILibrariesIOClient` method calls the corresponding Libraries.IO API and deserializes the JSON response into strongly typed objects.
 (e.g., `GetProject` calls the `https://libraries.io/api/:platform/:name` endpoint.) Each method's documentation comments include the 
@@ -20,12 +26,7 @@ Basic usage is demonstrated in the `samples\Libraries.IO.SDK.Sample` project and
 
 ```csharp
     // Sample DI setup of ILibrariesIOClient
-    var builder = Host.CreateApplicationBuilder(args);    
-    var config = new ClientConfiguration
-    {
-        ApiKey = Environment.GetEnvironmentVariable("LIBRARIES_IO_API_KEY") ?? string.Empty,
-    };
-    builder.Services.AddSingleton(config);
+    var builder = Host.CreateApplicationBuilder(args);
     builder.Services.AddHttpClient();
     builder.Services.AddSingleton<ILibrariesIOClient, LibrariesIOClient>();
     var host = builder.Build();
@@ -38,9 +39,6 @@ Basic usage is demonstrated in the `samples\Libraries.IO.SDK.Sample` project and
         Console.WriteLine($"Platform: {platform.Name}");
     }
 ```
-
-If desired, behavior of the `HttpClient` used by `ILibrariesIOClient` can be customized 
-using a [named client](https://learn.microsoft.com/en-us/dotnet/core/extensions/httpclient-factory#named-clients) and setting `ClientConfiguration.HttpClientName`.
 
 ## Build and Test
 
