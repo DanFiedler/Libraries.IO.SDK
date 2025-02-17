@@ -46,8 +46,6 @@ jobs:
       run: dotnet pack /home/runner/work/Libraries.IO.SDK/Libraries.IO.SDK/src/Libraries.IO.SDK/Libraries.IO.SDK.csproj
 
     # Publish package to NuGet
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v2.0.1
     - name: Publish to Nuget
-      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push **\*.nupkg -s 'https://api.nuget.org/v3/index.json' -k ${{secrets.NUGET_API_KEY}}
       
