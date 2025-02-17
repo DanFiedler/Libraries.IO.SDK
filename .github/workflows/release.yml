@@ -47,7 +47,7 @@ jobs:
 
     # Publish package to NuGet
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
+      uses: NuGet/setup-nuget@v2.0.1
     - name: Publish to Nuget
       run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
       
