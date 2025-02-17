@@ -12,7 +12,7 @@ public class ProjectVersion
     public string SpdxExpression { get; set; } = string.Empty;
 
     [JsonPropertyName("original_license")]
-    public string OriginalLicense { get; set; } = string.Empty;
+    public object OriginalLicense { get; set; } = string.Empty;
 
     [JsonPropertyName("researched_at")]
     public object ResearchedAt { get; set; } = string.Empty;
