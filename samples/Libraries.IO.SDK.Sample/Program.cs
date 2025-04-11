@@ -14,17 +14,33 @@ public class Program
         var client = host.Services.GetRequiredService<ILibrariesIOClient>();
 
         var cts = new CancellationTokenSource();
-        await foreach(var platform in client.GetPlatforms(cts.Token))
-        {
-            Console.WriteLine($"Platform: {platform.Name}");
-        }
+        var cancellationToken = cts.Token;
+        await GetAndPrintPlatforms(client, cancellationToken);
+        await GetAndPrintSearchResults(client, cancellationToken);
 
+        Console.WriteLine("Libraries.IO.SDK sample ConsoleApp completed.");
+    }
+
+    private static async Task GetAndPrintPlatforms(ILibrariesIOClient client, CancellationToken cancellationToken)
+    {
+        var platforms = await client.GetPlatforms(cancellationToken);
+        if (platforms != null)
+        {
+            foreach (var platform in platforms)
+            {
+                Console.WriteLine($"Platform: {platform.Name}");
+            }
+        }
+    }
+
+    private static async Task GetAndPrintSearchResults(ILibrariesIOClient client, CancellationToken cancellationToken)
+    {
         Console.WriteLine("Sample project search for `grunt`:");
         var searchParameters = new ProjectSearchParameters
         {
             Platforms = "npm"
         };
-        var projects = await client.SearchProjectsSync("grunt", cts.Token, searchParameters);
+        var projects = await client.SearchProjects("grunt", cancellationToken, searchParameters);
         if (projects == null)
         {
             Console.WriteLine("No projects found.");
@@ -37,8 +53,6 @@ public class Program
                 Console.WriteLine($"Project {i + 1} Name:{project.Name}, LatestRelease:{project.LatestReleaseNumber}, VersionCount:{project.Versions.Count}");
             }
         }
-
-        Console.WriteLine("Libraries.IO.SDK sample ConsoleApp completed.");
     }
 
     private static IHost CreateApplicationHost(string[] args)

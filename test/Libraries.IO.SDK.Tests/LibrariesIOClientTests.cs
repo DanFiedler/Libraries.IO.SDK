@@ -13,8 +13,9 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var platforms = await client.GetPlatforms(CancellationToken.None).ToListAsync();
+        var platforms = await client.GetPlatforms(CancellationToken.None);
 
+        Assert.NotNull(platforms);
         var platform = platforms.FirstOrDefault();
         Assert.NotNull(platform);
         platform.Name.Should().Be("NPM");
@@ -69,10 +70,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var projects = await client.GetProjectDependents("NuGet", "BenchmarkDotNet", CancellationToken.None).ToListAsync();
+        var projects = await client.GetProjectDependents("NuGet", "BenchmarkDotNet", CancellationToken.None);
 
         Assert.NotNull(projects);
-        projects.Count.Should().Be(2);
+        projects.Length.Should().Be(2);
     }
 
     [Fact]
@@ -82,10 +83,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var repositories = await client.GetProjectDependentRepositories("NuGet", "BenchmarkDotNet", CancellationToken.None).ToListAsync();
+        var repositories = await client.GetProjectDependentRepositories("NuGet", "BenchmarkDotNet", CancellationToken.None);
 
         Assert.NotNull(repositories);
-        repositories.Count.Should().Be(2);
+        repositories.Length.Should().Be(2);
     }
 
     [Fact]
@@ -95,10 +96,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var contributors = await client.GetProjectContributors("arbitraryPlatform", "arbitraryProject", CancellationToken.None).ToListAsync();
+        var contributors = await client.GetProjectContributors("arbitraryPlatform", "arbitraryProject", CancellationToken.None);
 
         Assert.NotNull(contributors);
-        contributors.Count.Should().Be(2);
+        contributors.Length.Should().Be(2);
     }
 
     [Fact]
@@ -122,10 +123,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var projects = await client.SearchProjects(null, CancellationToken.None).ToListAsync();
+        var projects = await client.SearchProjects(null, CancellationToken.None);
 
         Assert.NotNull(projects);
-        projects.Count.Should().Be(2);
+        projects.Length.Should().Be(2);
     }
 
     [Fact]
@@ -162,10 +163,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var projects = await client.GetRepositoryProjects("arbitraryOwner", "arbitraryProject", CancellationToken.None).ToListAsync();
+        var projects = await client.GetRepositoryProjects("arbitraryOwner", "arbitraryProject", CancellationToken.None);
 
         Assert.NotNull(projects);
-        projects.Count.Should().Be(2);
+        projects.Length.Should().Be(2);
     }
 
     [Fact]
@@ -188,10 +189,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var repositories = await client.GetUserRepositories("arbitraryLogin", CancellationToken.None).ToListAsync();
+        var repositories = await client.GetUserRepositories("arbitraryLogin", CancellationToken.None);
 
         Assert.NotNull(repositories);
-        repositories.Count.Should().Be(2);
+        repositories.Length.Should().Be(2);
     }
 
     [Fact]
@@ -201,10 +202,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var repositories = await client.GetUserProjects("arbitraryLogin", CancellationToken.None).ToListAsync();
+        var repositories = await client.GetUserProjects("arbitraryLogin", CancellationToken.None);
 
         Assert.NotNull(repositories);
-        repositories.Count.Should().Be(2);
+        repositories.Length.Should().Be(2);
     }
 
     [Fact]
@@ -214,10 +215,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var repositories = await client.GetUserPackageContributions("arbitraryLogin", CancellationToken.None).ToListAsync();
+        var repositories = await client.GetUserPackageContributions("arbitraryLogin", CancellationToken.None);
 
         Assert.NotNull(repositories);
-        repositories.Count.Should().Be(2);
+        repositories.Length.Should().Be(2);
     }
 
     [Fact]
@@ -227,10 +228,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var repositories = await client.GetUserRepositoryContributions("arbitraryLogin", CancellationToken.None).ToListAsync();
+        var repositories = await client.GetUserRepositoryContributions("arbitraryLogin", CancellationToken.None);
 
         Assert.NotNull(repositories);
-        repositories.Count.Should().Be(2);
+        repositories.Length.Should().Be(2);
     }
 
     [Fact]
@@ -240,10 +241,10 @@ public class LibrariesIOClientTests
         var httpClientFactory = SetupHttpClientFactory(json);
         var client = CreateClient(httpClientFactory);
 
-        var repositories = await client.GetUserDependencies("arbitraryLogin", CancellationToken.None).ToListAsync();
+        var repositories = await client.GetUserDependencies("arbitraryLogin", CancellationToken.None);
 
         Assert.NotNull(repositories);
-        repositories.Count.Should().Be(2);
+        repositories.Length.Should().Be(2);
     }
 
     private static string GetJson(string resourceName)

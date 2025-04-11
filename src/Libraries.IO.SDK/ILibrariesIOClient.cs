@@ -11,7 +11,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Platform> GetPlatforms(CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Platform[]?> GetPlatforms(CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get information about a package and its versions.
@@ -45,7 +45,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Project> GetProjectDependents(string platform, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Project[]?> GetProjectDependents(string platform, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get repositories that depend on a given project.
@@ -57,7 +57,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Repository> GetProjectDependentRepositories(string platform, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Repository[]?> GetProjectDependentRepositories(string platform, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get users that have contributed to a given project.
@@ -69,7 +69,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Contributor> GetProjectContributors(string platform, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Contributor[]?> GetProjectContributors(string platform, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get breakdown of SourceRank score for a given project.
@@ -91,19 +91,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Project> SearchProjects(string? query, CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30);
-
-    /// <summary>
-    /// Search for projects, not using async code as this may cause intermittent 502 errors
-    /// GET https://libraries.io/api/search?q=
-    /// </summary>
-    /// <param name="query"></param>
-    /// <param name="cancellationToken"></param>
-    /// <param name="searchParameters"></param>
-    /// <param name="page"></param>
-    /// <param name="perPage"></param>
-    public Task<Project[]?> SearchProjectsSync(string? query, CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30);
-
+    public Task<Project[]?> SearchProjects(string? query, CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get info for a repository. Currently only works for open source repositories.
@@ -116,7 +104,7 @@ public interface ILibrariesIOClient
     public Task<Repository?> GetRepository(string owner, string name, CancellationToken cancellationToken);
 
     /// <summary>
-    /// Get a list of dependencies for all of a repository's projects. Currently only works for open source repositories.
+    /// Get a repository with a list of dependencies for all of a repository's projects. Currently only works for open source repositories.
     /// GET https://libraries.io/api/github/:owner/:name/dependencies
     /// </summary>
     /// <param name="owner"></param>
@@ -135,7 +123,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Project> GetRepositoryProjects(string owner, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Project[]?> GetRepositoryProjects(string owner, string name, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get information for a given user or organization.
@@ -155,7 +143,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Repository> GetUserRepositories(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Repository[]?> GetUserRepositories(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get a list of packages referencing the given user's repositories.
@@ -166,7 +154,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Project> GetUserProjects(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Project[]?> GetUserProjects(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get a list of packages that the given user has contributed to.
@@ -177,7 +165,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Project> GetUserPackageContributions(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Project[]?> GetUserPackageContributions(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get a list of repositories that the given user has contributed to.
@@ -188,7 +176,7 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Repository> GetUserRepositoryContributions(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
+    public Task<Repository[]?> GetUserRepositoryContributions(string login, CancellationToken cancellationToken, int page = 1, int perPage = 30);
 
     /// <summary>
     /// Get a list of unique packages that the given user's repositories list as a dependency. Ordered by frequency of use in those repositories.
@@ -200,5 +188,5 @@ public interface ILibrariesIOClient
     /// <param name="page"></param>
     /// <param name="perPage"></param>
     /// <returns></returns>
-    public IAsyncEnumerable<Project> GetUserDependencies(string login, CancellationToken cancellationToken, string? platform = null, int page = 1, int perPage = 30);
+    public Task<Project[]?> GetUserDependencies(string login, CancellationToken cancellationToken, string? platform = null, int page = 1, int perPage = 30);
 }
