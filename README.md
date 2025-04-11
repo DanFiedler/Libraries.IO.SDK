@@ -33,9 +33,14 @@ Basic usage is demonstrated in the `samples\Libraries.IO.SDK.Sample` project and
     // Sample usage of ILibrariesIOClient to get list of platforms from LibrariesIO
     var client = host.Services.GetRequiredService<ILibrariesIOClient>();
     var cts = new CancellationTokenSource();
-    await foreach(var platform in client.GetPlatforms(cts.Token))
+    var cancellationToken = cts.Token;
+    var platforms = await client.GetPlatforms(cancellationToken);
+    if (platforms != null)
     {
-        Console.WriteLine($"Platform: {platform.Name}");
+        foreach (var platform in platforms)
+        {
+            Console.WriteLine($"Platform: {platform.Name}");
+        }
     }
 ```
 
