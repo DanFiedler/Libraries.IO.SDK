@@ -110,6 +110,14 @@ public class LibrariesIOClient : ILibrariesIOClient
         return httpClient.GetFromJsonAsync<SourceRank?>(url, cancellationToken);
     }
 
+    public async Task<Project[]?> SearchProjectsSync(string? query, CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30)
+    {
+        string url = $"{ProjectSearchUrlBuilder.Build(query, searchParameters)}&{GetCommonParameters(page, perPage)}";
+        var httpClient = _httpClientFactory.CreateClient();
+        var projects = await httpClient.GetFromJsonAsync<Project[]>(url, cancellationToken);
+        return projects;
+    }
+
     public async IAsyncEnumerable<Project> SearchProjects(string? query, [EnumeratorCancellation] CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30)
     {
         string url = $"{ProjectSearchUrlBuilder.Build(query, searchParameters)}&{GetCommonParameters(page, perPage)}";

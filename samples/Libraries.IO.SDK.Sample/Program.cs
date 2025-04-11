@@ -19,6 +19,25 @@ public class Program
             Console.WriteLine($"Platform: {platform.Name}");
         }
 
+        Console.WriteLine("Sample project search for `grunt`:");
+        var searchParameters = new ProjectSearchParameters
+        {
+            Platforms = "npm"
+        };
+        var projects = await client.SearchProjectsSync("grunt", cts.Token, searchParameters);
+        if (projects == null)
+        {
+            Console.WriteLine("No projects found.");
+        }
+        else
+        {
+            for (int i = 0; i < projects.Length; i++)
+            {
+                var project = projects[i];
+                Console.WriteLine($"Project {i + 1} Name:{project.Name}, LatestRelease:{project.LatestReleaseNumber}, VersionCount:{project.Versions.Count}");
+            }
+        }
+
         Console.WriteLine("Libraries.IO.SDK sample ConsoleApp completed.");
     }
 

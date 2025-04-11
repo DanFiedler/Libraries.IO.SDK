@@ -94,6 +94,18 @@ public interface ILibrariesIOClient
     public IAsyncEnumerable<Project> SearchProjects(string? query, CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30);
 
     /// <summary>
+    /// Search for projects, not using async code as this may cause intermittent 502 errors
+    /// GET https://libraries.io/api/search?q=
+    /// </summary>
+    /// <param name="query"></param>
+    /// <param name="cancellationToken"></param>
+    /// <param name="searchParameters"></param>
+    /// <param name="page"></param>
+    /// <param name="perPage"></param>
+    public Task<Project[]?> SearchProjectsSync(string? query, CancellationToken cancellationToken, ProjectSearchParameters? searchParameters = null, int page = 1, int perPage = 30);
+
+
+    /// <summary>
     /// Get info for a repository. Currently only works for open source repositories.
     /// GET https://libraries.io/api/github/:owner/:name
     /// </summary>
