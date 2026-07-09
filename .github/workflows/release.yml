@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
     # get version from tag (e.g., v1.2.3 --> 1.2.3)
     - name: Get version
@@ -25,7 +25,7 @@ jobs:
               
     # edit Libraries.IO.SDK.csproj to replace with desired version
     - name: Replace version
-      uses: jacobtomlinson/gha-find-replace@dfbfef71bc27c27c39d89534540a8960e0eee6b0 # v3.0.5
+      uses: jacobtomlinson/gha-find-replace@b19bfcb2a015af55fd6e160d1d1987e887f8c163 # v3.0.5
       with:
         include: "*/Libraries.IO.SDK/Libraries.IO.SDK.csproj"
         find: <Version>1.0.0</Version>
@@ -33,7 +33,7 @@ jobs:
 
     # build our library, run tests, and create the NuGet package
     - name: Setup .NET
-      uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+      uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
       with:
         dotnet-version: 9.0.x
     - name: Restore dependencies
